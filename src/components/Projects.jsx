@@ -1,4 +1,5 @@
 import { ArrowUpRight, Code, Palette, Cpu } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const projects = [
   {
@@ -27,11 +28,13 @@ const projects = [
 function ProjectCard({ project }) {
   const Icon = project.icon;
   return (
-    <a
+    <motion.a
       href={project.link}
       target="_blank"
       rel="noreferrer"
       className="group block rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/60 backdrop-blur-sm hover:border-neutral-300 dark:hover:border-neutral-700 transition overflow-hidden"
+      whileHover={{ y: -4, scale: 1.01 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20 }}
     >
       <div className="p-6">
         <div className="flex items-center justify-between">
@@ -52,7 +55,7 @@ function ProjectCard({ project }) {
           ))}
         </div>
       </div>
-    </a>
+    </motion.a>
   );
 }
 
@@ -70,11 +73,26 @@ export default function Projects() {
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: { staggerChildren: 0.08 }
+            }
+          }}
+        >
           {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <motion.div key={project.title} variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}>
+              <ProjectCard project={project} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
