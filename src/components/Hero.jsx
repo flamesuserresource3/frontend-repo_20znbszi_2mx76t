@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-[92vh] pt-28">
-      {/* 3D Scene */}
-      <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+    <section id="home" className="relative min-h-[92vh] pt-28 overflow-hidden">
+      {/* 3D Scene pinned to the right */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-1/2">
+        <Spline
+          scene="https://prod.spline.design/fcD-iW8YZHyBp1qq/scene.splinecode"
+          style={{ width: '100%', height: '100%' }}
+        />
       </div>
 
       {/* Gradient overlays - do not block interactions */}
@@ -21,7 +24,7 @@ export default function Hero() {
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.span
-        className="pointer-events-none absolute right-16 top-24 h-24 w-24 rounded-full bg-cyan-400/20 blur-2xl"
+        className="pointer-events-none absolute right-24 top-24 h-24 w-24 rounded-full bg-cyan-400/20 blur-2xl"
         animate={{ y: [0, 12, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
       />
@@ -31,13 +34,13 @@ export default function Hero() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <motion.div
-              className="lg:col-span-7"
+              className="lg:col-span-6 xl:col-span-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
               <motion.span
-                className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1 rounded-full bg-black/5 dark:bg-white/5"
+                className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1 rounded-full bg-black/5 dark:bg:white/5 dark:bg-white/5"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
@@ -103,7 +106,9 @@ export default function Hero() {
                 </motion.div>
               </div>
             </motion.div>
-            <div className="lg:col-span-5" />
+
+            {/* Spacer column for 3D on large screens */}
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-7" />
           </div>
 
           {/* Scroll indicator */}
@@ -119,6 +124,13 @@ export default function Hero() {
             </motion.span>
           </div>
         </div>
+      </div>
+
+      {/* Non-blocking top-right caption for 3D object */}
+      <div className="pointer-events-none absolute right-3 top-28 hidden lg:block">
+        <span className="rounded-full bg-white/70 dark:bg-neutral-900/70 backdrop-blur px-3 py-1 text-xs border border-neutral-200 dark:border-neutral-800">
+          Interactive Keyboard — drag to explore
+        </span>
       </div>
     </section>
   );
